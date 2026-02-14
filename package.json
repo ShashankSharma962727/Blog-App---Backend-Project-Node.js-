@@ -1,0 +1,21 @@
+{
+  "name": "blog-app",
+  "version": "1.0.0",
+  "description": "Blog Application with crud operations and Authentication.",
+  "license": "ISC",
+  "author": "Shashank Sharma",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.3.1",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.2.1"
+  }
+}
