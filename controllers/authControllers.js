@@ -2,9 +2,14 @@ const ejs = require("ejs");
 const bcrypt = require("bcrypt");
 const User = require("../model/user.js");
 const jwt = require("jsonwebtoken");
+const blog = require('../model/blog.js');
 
-const home = (req, res) => {
-  res.render("home");
+
+const home = async (req, res) => {
+  const allBlogs = await blog.find({});
+  res.render("home",{
+    allBlogs: allBlogs,
+  });
 };
 
 const getSignUp = (req, res) => {
