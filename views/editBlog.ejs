@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('./partials/head')%>
+</head>
+
+<body class="bg-[#F5F5DC] min-h-screen">
+    <%- include('./partials/nav')%>
+
+        <div class="max-w-3xl mx-auto mt-10 bg-white p-8 rounded-xl shadow-md">
+            <h1 class="text-2xl font-semibold mb-6 text-center text-gray-800">Edit Blog</h1>
+
+            <form action="/blogs/edit/<%= blogData._id %>" method="post" enctype="multipart/form-data" class="space-y-6">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Title</label>
+                    <input type="text" name="title" value="<%= blogData.title %>" required
+                        class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Body</label>
+                    <textarea name="body" rows="6" required
+                        class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"> <%= blogData.body %> </textarea>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700 font-medium mb-2">Current Image</label>
+                    <img src="<%= blogData.coverImageURL %>" alt="Cover Image"
+                        class="w-48 h-32 object-cover rounded-md mb-4">
+                    <label class="block text-gray-700 font-medium mb-2">Change Image (optional)</label>
+                    <input type="file" name="coverImageURL" accept="image/*" class="w-full text-gray-700">
+                </div>
+
+                <div class="text-center">
+                    <button type="submit"
+                        class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition">
+                        Update Blog
+                    </button>
+                </div>
+            </form>
+        </div>
+</body>
+
+</html>

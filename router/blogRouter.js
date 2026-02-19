@@ -24,5 +24,7 @@ blogRouter.post('/addblog',protectRoute, upload.single('coverImageURL'), blogCon
 blogRouter.get('/myblogs',protectRoute, blogControllers.getmyBlogs);
 blogRouter.get('/:id',protectRoute, blogControllers.readBlog);
 blogRouter.post('/delete/:id',protectRoute, blogControllers.deleteBlog);
+blogRouter.get('/edit/:id', protectRoute, blogControllers.editBlogFrom);
+blogRouter.post('/edit/:id', protectRoute,upload.single('coverImageURL'), blogControllers.posteditBlog);
 
 module.exports = blogRouter;

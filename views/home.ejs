@@ -6,15 +6,16 @@
 </head>
 
 <body>
-    <%- include('./partials/nav')%>
+    <main class="bg-[#F5F5DC] min-h-screen">
+        <%- include('./partials/nav')%>
         <% if(!user) {%>
             <h1>You are not logged in</h1>
             <% } else { %>
-                <h1>Blogs</h1>
-                <section class="flex">
+                <h1 class="text-blue-600 text-xl md:text-5xl text-center mt-5 font-bold">Blogs</h1>
+                <section class="w-full p-10 flex flex-col md:flex-row flex-wrap justify-center items-center gap-10">
                     <% allBlogs.forEach(blog=> { %>
-                        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
-                            <img src="<%= blog.coverImageURL %>" alt="Blog Image" class="w-full h-48 object-cover">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden transition w-full max-w-100 hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+                            <img src="<%= blog.coverImageURL %>" alt="Blog Image" class="w-full aspect-square object-cover">
                             <div class="p-4">
                                 <h5 class="text-lg font-semibold text-gray-800 mb-2">
                                     <%= blog.title %>
@@ -27,6 +28,7 @@
                         <% }) %>
                 </section>
                 <% } %>
+    </main>
 </body>
 
 </html>

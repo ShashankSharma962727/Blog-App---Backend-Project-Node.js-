@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('./partials/head')%>
 </head>
-<body class="bg-gray-100 min-h-screen">
-  <%- include('./partials/nav')%>
 
-  <% if (!user) { %>
-    <h1 class="text-center text-2xl mt-20 text-gray-700">You are not logged in</h1>
-  <% } else { %>
-    <div class="max-w-7xl mx-auto px-6 py-10">
-      <h1 class="text-3xl font-semibold mb-8 text-gray-800 text-center">My Blogs</h1>
+<body>
+  <main class="bg-[#F5F5DC] min-h-screen">
+    <%- include('./partials/nav')%>
 
-      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <% if (!user) { %>
+      <h1>You are not logged in</h1>
+    <% } else { %>
+      <h1 class="text-blue-600 text-xl md:text-5xl text-center mt-5 font-bold">My Blogs</h1>
+
+      <section class="w-full p-10 flex flex-col md:flex-row flex-wrap justify-center items-center gap-10">
         <% myBlogs.forEach(blog => { %>
-          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+          <div class="bg-white rounded-lg shadow-md overflow-hidden transition w-full max-w-100 hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
 
-            <img src="<%= blog.coverImageURL %>" alt="Blog Image" class="w-full h-52 object-cover">
+            <img src="<%= blog.coverImageURL %>" alt="Blog Image" class="w-full aspect-square object-cover">
 
-            <div class="p-5 flex flex-col justify-between h-52">
+            <div class="p-4 flex flex-col justify-between h-48">
               <div>
-                <h5 class="text-xl font-semibold text-gray-800 mb-2 line-clamp-1"><%= blog.title %></h5>
-                <p class="text-gray-600 text-sm line-clamp-2"><%= blog.body.slice(0, 120) %>...</p>
+                <h5 class="text-lg font-semibold text-gray-800 mb-2 line-clamp-1">
+                  <%= blog.title %>
+                </h5>
+                <p class="text-gray-600 text-sm line-clamp-2 mb-3">
+                  <%= blog.body.slice(0, 100) %>...
+                </p>
               </div>
 
-              <div class="flex justify-between items-center mt-4">
+              <div class="flex justify-between items-center">
                 <a href="/blogs/<%= blog._id %>"
-                  class="inline-flex items-center gap-1 text-sm font-medium bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  class="inline-block bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm">
                   Read More
                 </a>
 
                 <div class="flex items-center gap-2">
-                    
                   <a href="/blogs/edit/<%= blog._id %>"
                     class="p-2 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 transition"
                     aria-label="Edit">
@@ -46,11 +48,12 @@
                   </a>
 
                   <form action="/blogs/delete/<%= blog._id %>" method="post">
-                    <button type="submit" class="p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition" aria-label="Delete">
+                    <button type="submit"
+                      class="p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 transition"
+                      aria-label="Delete">
                       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M6 18L18 6M6 6l12 12" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </button>
                   </form>
@@ -60,7 +63,8 @@
           </div>
         <% }) %>
       </section>
-    </div>
-  <% } %>
+    <% } %>
+  </main>
 </body>
+
 </html>

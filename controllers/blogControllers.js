@@ -51,11 +51,56 @@ const deleteBlog = async (req, res) => {
   }
 };
 
+// Get edit blog form
+const editBlogFrom = async (req, res) => {
+  try{
+    const id = req.params.id;
+    const blogData = await blog.findById(id);
+
+    if(!blogData){
+      res.send("Blog Not Found!");
+    }
+
+    res.render("editBlog",{blogData});
+  }
+  catch(error){
+    console.log(error);
+  }
+};
+
+// Update blog (with or without new image)
+const posteditBlog = async (req, res) => {
+  try{
+    
+    const id = req.params.id;
+    const {title, body} = req.body;
+
+    const updateData = {
+      title,
+      body
+    }
+
+    if (req.file) {
+      updateData.coverImageURL = `/uploads/${req.file.filename}`;
+    }
+
+    await blog.findByIdAndUpdate(id, updateData);
+
+    res.redirect("/blogs/myblogs");
+  }
+  catch(error){
+    console.log(error);
+  }
+};
+
+
 module.exports = {
   getaddBlog,
   postaddBlog,
   getmyBlogs,
   home,
   readBlog,
-  deleteBlog
+  deleteBlog,
+  posteditBlog,
+  editBlogFrom,
 };

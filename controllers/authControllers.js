@@ -12,6 +12,10 @@ const getSignIn = (req, res) => {
   res.render("signin");
 };
 
+const redirect = (req, res) => {
+  res.redirect("/blogs");
+}
+
 const postSignUp = async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -69,4 +73,5 @@ module.exports = {
   postSignUp,
   postSignIn,
   logout,
+  redirect
 };

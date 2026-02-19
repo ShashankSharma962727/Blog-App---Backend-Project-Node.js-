@@ -3,6 +3,7 @@ const authRouter = express.Router();
 const authControllers = require("../controllers/authControllers.js");
 const protectRoute = require("../middlewares/protectRoute.js");
 
+authRouter.get("/", authControllers.redirect);
 authRouter.get("/signup", authControllers.getSignUp);
 authRouter.get("/signin", authControllers.getSignIn);
 authRouter.post("/signup", authControllers.postSignUp);
