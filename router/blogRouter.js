@@ -20,5 +20,6 @@ const upload = multer({ storage: storage })
 
 blogRouter.get('/addblog',protectRoute, blogControllers.getaddBlog);
 blogRouter.post('/addblog',protectRoute, upload.single('coverImageURL'), blogControllers.postaddBlog);
+blogRouter.get('/myblogs',protectRoute, blogControllers.getmyBlogs);
 
 module.exports = blogRouter;
