@@ -4,14 +4,6 @@ const User = require("../model/user.js");
 const jwt = require("jsonwebtoken");
 const blog = require('../model/blog.js');
 
-
-const home = async (req, res) => {
-  const allBlogs = await blog.find({});
-  res.render("home",{
-    allBlogs: allBlogs,
-  });
-};
-
 const getSignUp = (req, res) => {
   res.render("signup");
 };
@@ -60,7 +52,7 @@ const postSignIn = async (req, res) => {
 
     res.cookie("token", token);
 
-    res.redirect("/");
+    res.redirect("/blogs");
   } catch (error) {
     console.log(error);
   }
@@ -74,7 +66,6 @@ const logout = (req, res) => {
 module.exports = {
   getSignUp,
   getSignIn,
-  home,
   postSignUp,
   postSignIn,
   logout,

@@ -18,8 +18,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
+blogRouter.get('/', blogControllers.home);
 blogRouter.get('/addblog',protectRoute, blogControllers.getaddBlog);
 blogRouter.post('/addblog',protectRoute, upload.single('coverImageURL'), blogControllers.postaddBlog);
 blogRouter.get('/myblogs',protectRoute, blogControllers.getmyBlogs);
+blogRouter.get('/:id',protectRoute, blogControllers.readBlog);
+blogRouter.post('/delete/:id',protectRoute, blogControllers.deleteBlog);
 
 module.exports = blogRouter;
