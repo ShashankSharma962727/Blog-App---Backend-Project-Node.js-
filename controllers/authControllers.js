@@ -2,27 +2,51 @@ const ejs = require("ejs");
 const bcrypt = require("bcrypt");
 const User = require("../model/user.js");
 const jwt = require("jsonwebtoken");
-const blog = require('../model/blog.js');
+const blog = require("../model/blog.js");
 
 const getSignUp = (req, res) => {
-  res.render("signup");
+  try {
+    res.render("signup");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error while loading the signup page.");
+  }
 };
 
 const getSignIn = (req, res) => {
-  res.render("signin");
+  try {
+    res.render("signin");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error while loading the signin page.");
+  }
 };
 
 const redirect = (req, res) => {
-  res.redirect("/blogs");
-}
+  try {
+    res.redirect("/blogs");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error while redirecting.");
+  }
+};
 
 const postSignUp = async (req, res) => {
-  const { username, email, password } = req.body;
-
   try {
+    const { username, email, password } = req.body;
+
+    if (!username || !email || !password) {
+      return res.status(400).send("All fields are required.");
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.render("signup", { error: "Email already registered!" });
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    const user = await User.create({
+    await User.create({
       username,
       email,
       password: hash,
@@ -30,20 +54,26 @@ const postSignUp = async (req, res) => {
 
     res.redirect("/signin");
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).send("Error while signing up.");
   }
 };
 
 const postSignIn = async (req, res) => {
-  const { email, password } = req.body;
-
   try {
-    const user = await User.findOne({ email });
+    const { email, password } = req.body;
 
-    if (!user) return res.render("signin", { error: "Invalid email or password!",}); 
+    if (!email || !password) {
+      return res.render("signin", { error: "All fields are required!" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.render("signin", { error: "Invalid email or password!" });
 
     const compare = await bcrypt.compare(password, user.password);
-    if (!compare) return res.render("signin", { error: "Invalid email or password!", });
+    if (!compare)
+      return res.render("signin", { error: "Invalid email or password!" });
 
     const token = jwt.sign(
       {
@@ -51,20 +81,25 @@ const postSignIn = async (req, res) => {
         username: user.username,
         email: user.email,
       },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET
     );
 
     res.cookie("token", token);
-
     res.redirect("/blogs");
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).send("Error while signing in.");
   }
 };
 
 const logout = (req, res) => {
-  res.clearCookie("token");
-  res.redirect("/signin");
+  try {
+    res.clearCookie("token");
+    res.redirect("/signin");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error while logging out.");
+  }
 };
 
 module.exports = {
@@ -73,5 +108,5 @@ module.exports = {
   postSignUp,
   postSignIn,
   logout,
-  redirect
+  redirect,
 };

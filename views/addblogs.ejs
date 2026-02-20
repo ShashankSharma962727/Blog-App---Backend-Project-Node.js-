@@ -7,7 +7,7 @@
   <%- include('./partials/nav')%>
 
   <% if (!user) { %>
-    <h1 class="text-center text-2xl mt-20 text-gray-700">You are not logged in</h1>
+    <h1 class="text-center text-2xl font-bold mt-10">You are not logged in</h1>
   <% } else { %>
     <div class="flex justify-center items-center py-10">
       <form method="post" action="/blogs/addblog" enctype="multipart/form-data"

@@ -9,7 +9,7 @@
     <main class="bg-[#F5F5DC] min-h-screen">
         <%- include('./partials/nav')%>
         <% if(!user) {%>
-            <h1>You are not logged in</h1>
+            <h1 class="text-center text-2xl font-bold mt-10">You are not logged in</h1>
             <% } else { %>
                 <h1 class="text-blue-600 text-xl md:text-5xl text-center mt-5 font-bold">Blogs</h1>
                 <section class="w-full p-10 flex flex-col md:flex-row flex-wrap justify-center items-center gap-10">
